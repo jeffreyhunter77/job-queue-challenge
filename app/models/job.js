@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
  */
 
 var JobSchema = new mongoose.Schema({
-  status: {type: String, required: true,
+  status: {type: String, required: true, default: 'pending', 
     'enum': ['pending', 'running', 'complete', 'error']},
   url: {type: String, required: true},
   createdAt: { type: Date, default: Date.now },

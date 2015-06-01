@@ -9,6 +9,7 @@ var _ = require('lodash')
   , sinon = require('sinon')
   , path = require('path')
   , fs = require('fs')
+  , app = false
 ;
 
 
@@ -16,7 +17,7 @@ var _ = require('lodash')
  * Mocked version of express that stubs out the first call to app.listen()
  */
 function mockedExpress() {
-  var app = express();
+  app = express();
   var l = app.listen;
   
   app.listen = function() { app.listen = l; }
@@ -48,6 +49,9 @@ function mocksWithModels() {
 
 proxyquire('../../server',
   _.extend({
-    './init/app': proxyquire('../../init/app', mocks),
-    './init/db': proxyquire('../../init/db', mocksWithModels())
+    './init/db': proxyquire('../../init/db', mocksWithModels()),
+    './init/app': proxyquire('../../init/app', mocks)
   }, mocks));
+
+// setUp function
+module.exports.setUp = function() { return app; }

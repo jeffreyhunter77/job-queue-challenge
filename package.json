@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jeffreyhunter77/job-queue-challenge",
   "dependencies": {
+    "body-parser": "1.12.4",
     "express": "4.12.4",
     "lodash": "3.9.3",
     "mongoose": "4.0.4",
@@ -27,6 +28,7 @@
     "mocha": "2.2.5",
     "mongoose-mock": "0.4.0",
     "proxyquire": "1.5.0",
-    "sinon": "1.14.1"
+    "sinon": "1.14.1",
+    "supertest": "1.0.1"
   }
 }
