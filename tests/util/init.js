@@ -4,11 +4,11 @@
 
 var _ = require('lodash')
   , express = require('express')
-  , mongooseMock = require('mongoose-mock')
   , proxyquire = require('proxyquire')
-  , sinon = require('sinon')
   , path = require('path')
   , fs = require('fs')
+  , config = require('../../config')
+  , Q = require('q')
   , app = false
 ;
 
@@ -25,33 +25,35 @@ function mockedExpress() {
   return app;
 }
 
-/**
- * Semi-functional connect mock
- */
-mongooseMock.connect = sinon.stub(); // bug: not setup correctly in mongoose-mock
-mongooseMock.connect.callsArg(1);
-
-
-// set up injection of mock dependencies
-var mocks = {express: mockedExpress, mongoose: mongooseMock};
-
-function mocksWithModels() {
-  var overrides = _.extend({}, mocks);
+// return a list of model objects
+function modelList() {
   var modelDir = path.join(__dirname, '..', '..', 'app', 'models');
   
-  fs.readdirSync(modelDir).forEach(function(f) {
-    if (/\.js$/.test(f))
-      overrides[path.join(modelDir, f)] = proxyquire(path.join(modelDir, f), mocks);
-  });
-  
-  return overrides;
+  return fs.readdirSync(modelDir)
+    .filter(function(f) { return /\.js$/.test(f); })
+    .map(function(f) {
+      return require(path.join(modelDir, f));
+    });
 }
 
-proxyquire('../../server',
-  _.extend({
-    './init/db': proxyquire('../../init/db', mocksWithModels()),
-    './init/app': proxyquire('../../init/app', mocks)
-  }, mocks));
+// use test config
+_.extend(config, config.test);
+
+// keep track of the models
+models = modelList();
+
+// set up a server without starting it
+proxyquire('../../server', {
+  './init/app': proxyquire('../../init/app', {express: mockedExpress}),
+  express: mockedExpress
+});
 
 // setUp function
 module.exports.setUp = function() { return app; }
+
+// db cleanup function
+module.exports.dbCleanup = function() {
+  return models.reduce(function(chain, m) {
+    return chain.then(function() { return Q(m.remove({})); });
+  }, Q.fcall(_.noop));
+}

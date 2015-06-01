@@ -1,5 +1,5 @@
 var init = require('../util/init')
-  , mongooseMock = require('mongoose-mock')
+  , mongoose = require('mongoose')
   , assert = require('assert')
 ;
 
@@ -8,11 +8,11 @@ describe("Initialization", function() {
   describe("database", function() {
     
     it("should connect", function() {
-      assert(mongooseMock.connect.called);
+      assert(mongoose.connection);
     });
     
     it("should preload the models", function() {
-      assert(mongooseMock.model('Job'));
+      assert(mongoose.model('Job'));
     });
     
   });

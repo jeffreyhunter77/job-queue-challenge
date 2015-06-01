@@ -26,9 +26,7 @@
   },
   "devDependencies": {
     "mocha": "2.2.5",
-    "mongoose-mock": "0.4.0",
     "proxyquire": "1.5.0",
-    "sinon": "1.14.1",
     "supertest": "1.0.1"
   }
 }

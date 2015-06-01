@@ -1,3 +1,7 @@
 {
-  "mongoUrl": "mongodb://localhost/jobs"
+  "mongoUrl": "mongodb://localhost/jobs",
+
+  "test": {
+    "mongoUrl": "mongodb://localhost/jobstest"
+  }
 }

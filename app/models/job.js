@@ -12,6 +12,16 @@ var JobSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   result: String,
   message: String
+}, {
+
+  toJSON: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+    }
+  }
+
 });
 
 module.exports = mongoose.model('Job', JobSchema);
