@@ -18,6 +18,7 @@ module.exports = function(config) {
   
   // routes
   app.post('/jobs', jobsController.create);
+  app.get('/jobs/:id', jobsController.show);
   
   deferred.resolve(app);
   
