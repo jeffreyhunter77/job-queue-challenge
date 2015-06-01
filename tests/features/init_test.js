@@ -8,7 +8,7 @@ describe("Initialization", function() {
   describe("database", function() {
     
     it("should connect", function() {
-      assert(mongoose.connection);
+      assert(mongoose.connection.name);
     });
     
     it("should preload the models", function() {
