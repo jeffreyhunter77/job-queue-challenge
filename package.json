@@ -1,0 +1,32 @@
+{
+  "name": "job-queue-challenge",
+  "version": "1.0.0",
+  "description": "Massdrop Job Queue Coding Challenge",
+  "main": "server.js",
+  "scripts": {
+    "test": "bin/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffreyhunter77/job-queue-challenge.git"
+  },
+  "author": "Jeff Hunter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeffreyhunter77/job-queue-challenge/issues"
+  },
+  "homepage": "https://github.com/jeffreyhunter77/job-queue-challenge",
+  "dependencies": {
+    "express": "4.12.4",
+    "lodash": "3.9.3",
+    "mongoose": "4.0.4",
+    "q": "1.4.1",
+    "request": "2.57.0"
+  },
+  "devDependencies": {
+    "mocha": "2.2.5",
+    "mongoose-mock": "0.4.0",
+    "proxyquire": "1.5.0",
+    "sinon": "1.14.1"
+  }
+}
