@@ -18,7 +18,7 @@ www.google.com.
 
 ### POST /jobs
 
-A new job may be created with a request like:
+A new job may be created with a request following this format:
 
 ```http
 POST /jobs
@@ -40,3 +40,28 @@ Content-Type: application/json
   "createdAt": "2015-06-01T01:57:26.718Z"
 }
 ```
+
+### GET /jobs/:id
+
+Job status may be retrieved with a request following this format:
+
+```http
+GET /jobs/556bbc066262dca111af2876
+```
+
+A successful response follows this format:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": "556bbc066262dca111af2876",
+  "status": "complete",
+  "url": "http://www.google.com",
+  "createdAt": "2015-06-01T01:57:26.718Z",
+  "response": "<!DOCTYPE>\n<html>...</html>"
+}
+```
+
+The `status` property may be one of `pending`, `running`, `complete`, or `error`. In the case of an `error` status, and additional property, `message`, will contain any error message available.
