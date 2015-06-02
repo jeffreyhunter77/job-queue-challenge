@@ -1,4 +1,5 @@
 var _ = require('lodash')
+  , nock = require('nock')
   , init = require('../util/init')
   , assert = require('assert')
   , request = require('supertest')
@@ -13,6 +14,8 @@ describe("Jobs controller", function() {
     
     it("should create a new jobs entry", function(done) {
       
+      nock('http://www.google.com').get('/').reply(200, 'A search form');
+
       request(init.setUp())
         .post('/jobs')
         .send({url: 'http://www.google.com'})
@@ -36,6 +39,8 @@ describe("Jobs controller", function() {
     
     it("should discard extraneous properties", function(done) {
       
+      nock('http://www.google.com').get('/').reply(200, 'A search form');
+
       request(init.setUp())
         .post('/jobs')
         .send({url: 'http://www.google.com', status: 'running', createdAt: '2015-06-01T01:57:26.718Z'})
@@ -53,6 +58,27 @@ describe("Jobs controller", function() {
 
         })
         .end(done);
+        
+    });
+    
+    it("should run the requested job", function(done) {
+      
+      nock('http://www.google.com')
+        .get('/foo')
+        .reply(function() {
+
+          process.nextTick(done);
+          return [200, 'A search form'];
+
+        });
+
+      request(init.setUp())
+        .post('/jobs')
+        .send({url: 'http://www.google.com/foo'})
+        .expect(200)
+        .end(function(err) {
+          if (err) done(err);
+        });
         
     });
 
@@ -145,7 +171,7 @@ describe("Jobs controller", function() {
     it("should return 'not found' for an invalid job id", function(done) {
       
       request(init.setUp())
-        .get('/jobs/1234')
+        .get('/jobs/556d420417b2c92d1deeabe3')
         .expect(404)
         .expect(function(res) {
           assert.deepEqual(res.body, {message: "Not found"});

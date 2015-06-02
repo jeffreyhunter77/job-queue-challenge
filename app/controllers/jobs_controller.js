@@ -1,5 +1,6 @@
 var Job = require('../models/job')
   , _ = require('lodash')
+  , JobRunner = require('../../lib/job_runner')
 ;
 
 /**
@@ -10,6 +11,9 @@ module.exports.create = function(req, res, next) {
     .save()
     .then(function(job) {
       res.send(job);
+      
+      new JobRunner().run(job).done();
+
     })
     .end(next);
 }
@@ -19,7 +23,7 @@ module.exports.create = function(req, res, next) {
  */
 module.exports.show = function(req, res, next) {
   
-  Job.findOne(req.params.id)
+  Job.findById(req.params.id)
     .exec()
     .then(function(job) {
       if (job)
