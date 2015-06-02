@@ -77,4 +77,4 @@ Content-Type: application/json
 }
 ```
 
-The `status` property may be one of `pending`, `running`, `complete`, or `error`. In the case of an `error` status, and additional property, `message`, will contain any error message available.
+The `status` property may be one of `pending`, `running`, `complete`, or `error`. In the case of an `error` status, an additional property, `message`, will contain any error message available.
