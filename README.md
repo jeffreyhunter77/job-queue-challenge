@@ -72,7 +72,8 @@ Content-Type: application/json
   "status": "complete",
   "url": "http://www.google.com",
   "createdAt": "2015-06-01T01:57:26.718Z",
-  "response": "<!DOCTYPE>\n<html>...</html>"
+  "response": "<!DOCTYPE>\n<html>...</html>",
+  "statusCode": 200
 }
 ```
 

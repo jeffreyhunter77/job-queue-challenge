@@ -61,19 +61,40 @@ describe("Job model", function() {
         .save())
         .then(function(job) {
 
-          return job.complete('the result');
+          return job.complete(200, 'the result');
 
         })
         .then(function(job) {
           
           assert.strictEqual(job.status, 'complete');
           assert.strictEqual(job.result, 'the result');
+          assert.strictEqual(job.statusCode, 200);
           assert(!job.isModified());
           
         });
 
     });
     
+    it("should save the status code", function() {
+      
+      return Q(new Job({url: 'http://www.google.com', status: 'running'})
+        .save())
+        .then(function(job) {
+
+          return job.complete(500, 'internal error');
+
+        })
+        .then(function(job) {
+          
+          assert.strictEqual(job.status, 'complete');
+          assert.strictEqual(job.result, 'internal error');
+          assert.strictEqual(job.statusCode, 500);
+          assert(!job.isModified());
+          
+        });
+
+    });
+
   });
   
 

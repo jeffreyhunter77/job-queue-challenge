@@ -115,7 +115,7 @@ describe("Jobs controller", function() {
     });
     
     it("should return the result of a completed job", function() {
-      new Job({url: 'http://www.yahoo.com', status: 'complete', result: '<html />'})
+      new Job({url: 'http://www.yahoo.com', status: 'complete', result: '<html />', statusCode: 200})
         .save()
         .then(function(job) {
           
@@ -132,7 +132,8 @@ describe("Jobs controller", function() {
               status: 'complete',
               url: 'http://www.yahoo.com',
               createdAt: res.body.createdAt,
-              result: '<html />'
+              result: '<html />',
+              statusCode: 200
             });
 
           })

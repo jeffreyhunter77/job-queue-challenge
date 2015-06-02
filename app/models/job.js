@@ -12,6 +12,7 @@ var JobSchema = new mongoose.Schema({
   url: {type: String, required: true},
   createdAt: { type: Date, default: Date.now },
   result: String,
+  statusCode: Number,
   message: String
 }, {
 
@@ -50,9 +51,10 @@ JobSchema.static('nextRunnable', function() {
 /**
  * Update a job with a result and mark it as complete
  */
-JobSchema.method('complete', function(result) {
+JobSchema.method('complete', function(statusCode, result) {
   
   this.set('result', result);
+  this.set('statusCode', statusCode);
   this.set('status', 'complete');
   
   return Q(this.save());

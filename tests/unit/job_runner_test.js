@@ -20,8 +20,9 @@ describe("JobRunner", function() {
       var job = {
         url: 'http://google.com',
         save: function() { return Q.fcall(function() { return job; }); },
-        complete: function(result) {
+        complete: function(statusCode, result) {
           
+          assert.strictEqual(statusCode, 200);
           assert.strictEqual(result, 'A search form');
           
           done();
