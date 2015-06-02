@@ -14,6 +14,18 @@ www.google.com.
 
 # Solution
 
+## Assumptions
+
+It's assumed that multiple jobs may be run in parallel. It's further assumed that the queue behavior requires jobs to be started in FIFO order, but that completion order does not matter (i.e. you don't have to wait for one job to complete before starting another one).
+
+Features like server clusters running on a single database, limiting the number of concurrently executing jobs, and crash recovery are all out of scope for this exercise.
+
+## Requirements
+
+Other than the dependencies listed in `package.json`, the only requirement
+is MongoDB. The connection settings for mongo can be changed in
+`config.json`.
+
 ## API
 
 ### POST /jobs
