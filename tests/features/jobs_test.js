@@ -34,6 +34,28 @@ describe("Jobs controller", function() {
         
     });
     
+    it("should discard extraneous properties", function(done) {
+      
+      request(init.setUp())
+        .post('/jobs')
+        .send({url: 'http://www.google.com', status: 'running', createdAt: '2015-06-01T01:57:26.718Z'})
+        .expect(200)
+        .expect(function(res) {
+
+          assert.notEqual(res.body.createdAt, '2015-06-01T01:57:26.718Z');
+          
+          assert.deepEqual(res.body, {
+            id: res.body.id,
+            status: 'pending',
+            url: 'http://www.google.com',
+            createdAt: res.body.createdAt
+          });
+
+        })
+        .end(done);
+        
+    });
+
   });
   
   

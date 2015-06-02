@@ -1,11 +1,12 @@
 var Job = require('../models/job')
+  , _ = require('lodash')
 ;
 
 /**
  * Create a new job
  */
 module.exports.create = function(req, res, next) {
-  new Job(req.body)
+  new Job(_.pick(req.body, ['url']))
     .save()
     .then(function(job) {
       res.send(job);
